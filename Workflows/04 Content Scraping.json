@@ -1,0 +1,469 @@
+{
+  "name": "04 Content Scraping",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -176
+      ],
+      "id": "e1865327-4701-492f-9b3c-70f81cd225fc",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -80
+      ],
+      "id": "5b28707a-3b24-49cf-808a-644f31f12e60",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "url": "https://www.bigdata-insider.de/ki-insider/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        192,
+        -80
+      ],
+      "id": "ff3c25aa-4501-4806-a03a-643a16a9cd1b",
+      "name": "Load Index Page"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "output",
+              "cssSelector": "article",
+              "returnValue": "html",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        -80
+      ],
+      "id": "5b17de3d-9987-4d3f-8ea6-dff55d95bf36",
+      "name": "Extract Articles"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "output",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "link",
+              "cssSelector": "a",
+              "returnValue": "attribute",
+              "attribute": "href"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        -80
+      ],
+      "id": "10a39c53-c57e-4c13-bfa5-b3ee70436847",
+      "name": "Extract Article Link"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "289f0fca-503c-4093-b9ec-077b01487c8f",
+              "name": "url",
+              "value": "={{ $('Load Index Page').params.url.concat($json.link).replaceAll(\"//\", \"/\").replace(\":/\", \"://\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1088,
+        -80
+      ],
+      "id": "64d13c76-359e-4b0c-9812-a104d81fdffd",
+      "name": "Build URL"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "URL",
+              "field2": "url"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1536,
+        -80
+      ],
+      "id": "0977cdc0-155f-4dd1-a834-dc8c1db9814c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1760,
+        -80
+      ],
+      "id": "c8098f20-f72e-4cd2-bb6b-702dc6b172f5",
+      "name": "Load Article"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "date",
+              "cssSelector": "time",
+              "returnValue": "attribute",
+              "attribute": "datetime"
+            },
+            {
+              "key": "headline",
+              "cssSelector": "title"
+            },
+            {
+              "key": "summary",
+              "cssSelector": "article .inf-text--large"
+            },
+            {
+              "key": "content",
+              "cssSelector": "article",
+              "skipSelectors": "figure, a"
+            },
+            {
+              "key": "image_url",
+              "cssSelector": "article figure a",
+              "returnValue": "attribute",
+              "attribute": "data-infinity-image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1984,
+        -80
+      ],
+      "id": "15f94ed8-7b85-476d-9f73-cef8d4727514",
+      "name": "Extract Headline & Co."
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2208,
+        -80
+      ],
+      "id": "5e60bbf0-e63a-44f6-8c9e-b203ae207c7d",
+      "name": "Load Image"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "URL",
+              "fieldValue": "={{ $('Merge').item.json.url }}"
+            },
+            {
+              "fieldName": "Headline",
+              "fieldValue": "={{ $json.headline }}"
+            },
+            {
+              "fieldName": "Summary",
+              "fieldValue": "={{ $json.summary }}"
+            },
+            {
+              "fieldName": "Content",
+              "fieldValue": "={{ $json.content }}"
+            },
+            {
+              "fieldName": "Image",
+              "binaryData": true,
+              "binaryProperty": "data"
+            },
+            {
+              "fieldName": "Date",
+              "fieldValue": "={{ $json.date }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        2432,
+        -80
+      ],
+      "id": "cae6e53e-6c13-49d8-b849-deaed877494f",
+      "name": "Save to DB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "limit": "=1",
+        "options": {
+          "where": "=(URL,eq,{{ $json.url }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1312,
+        -152
+      ],
+      "id": "75000433-4452-4e62-9d9a-9634b9a7dca0",
+      "name": "Search in DB",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        16
+      ],
+      "id": "0598ebaf-f52e-4bc1-ae7a-dbbd38519818",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Load Index Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Extract Article Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Index Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Articles": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Article Link": {
+      "main": [
+        [
+          {
+            "node": "Build URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build URL": {
+      "main": [
+        [
+          {
+            "node": "Search in DB",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Load Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Article": {
+      "main": [
+        [
+          {
+            "node": "Extract Headline & Co.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Headline & Co.": {
+      "main": [
+        [
+          {
+            "node": "Load Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Image": {
+      "main": [
+        [
+          {
+            "node": "Save to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in DB": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Load Index Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "errorWorkflow": "ZgRERlb7YOFD2Fgh"
+  },
+  "versionId": "2602eef7-3b4c-4024-bca1-2d485dc58d63",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "7u6mbblgoqmi5kmG",
+  "tags": []
+}
