@@ -1,0 +1,67 @@
+{
+  "name": "Error Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ee0c715c-9032-4d54-8995-2a4cd4c91d8c",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "=Error in Workflow {{ $json.workflow.name }}: {{ $json.execution.url }}",
+        "priority": 1,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9d1a3cdd-4899-4fb6-a87c-eb190a27b6b4",
+      "name": "Push a message",
+      "credentials": {
+        "pushoverApi": {
+          "id": "Oj0LG1ETGfTVn9Zm",
+          "name": "Pushover account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Push a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "c6c823f4-8cff-4eae-b861-8e23090b4e40",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eb999fbe76e1a8cf24994b36377346ee97f035ae2497c06dc067100c25568c29"
+  },
+  "id": "H4pX_7vROoVHbaK2bQh_W",
+  "tags": []
+}

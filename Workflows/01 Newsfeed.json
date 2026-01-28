@@ -1,0 +1,1291 @@
+{
+  "name": "01 Newsfeed",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.tagesschau.de/xml/rss2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        -2848
+      ],
+      "id": "ce173f44-b37d-45d9-9cc5-93dadf50e138",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        -2752
+      ],
+      "id": "0b0a441a-1846-4cc6-a53a-3829a2514775",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Newsfeed</title>\n  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css\" integrity=\"sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js\" integrity=\"sha512-nKXmKvJyiGQy343jatQlzDprflyB5c+tKCzGP3Uq67v+lmzfnZUi/ZT+fc6ITZfSC5HhaBKUIvr/nTLCV+7F+Q==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>\n</head>\n<body>\n  <div class=\"container\">\n    <section>\n      <h1>Newsfeed</h1>\n\n      <div class=\"card\">\n        <div class=\"card-body lead\">\n          {{ $json.output }}\n        </div>\n      </div>\n      <br>\n      {{ $('Join HTML items').item.json.html }}\n    </section>\n  </div>\n  <script type=\"text/javascript\">\n    const classes = {\n      \"img\": \"img-fluid\"\n    }\n    for (let selector in classes) {\n      const className = classes[selector];\n      document.querySelectorAll(selector).forEach(item => (\n        item.classList.add(className)\n      ));\n    }\n  </script>\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        2992,
+        -2752
+      ],
+      "id": "24c354a0-d25d-4003-bde7-a893ce4901b8",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "path": "bd01b3e6-0f91-4ca3-b198-71e7249fff63",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1296,
+        -2656
+      ],
+      "id": "764ca46f-7ace-4d1e-9976-0845c91ff704",
+      "name": "Webhook",
+      "webhookId": "bd01b3e6-0f91-4ca3-b198-71e7249fff63"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3440,
+        -2656
+      ],
+      "id": "c1d184e1-bcee-4a2c-bbef-b3946b885069",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "url": "https://www.tagesschau.de/api2u/homepage",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -624,
+        -2656
+      ],
+      "id": "1fa97bd1-777d-4f45-b3dc-1b56a818c21a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "news",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -2656
+      ],
+      "id": "435ae846-2365-4579-bb2e-2376b952be82",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        48,
+        -2752
+      ],
+      "id": "85753b27-ea6d-4534-9b13-73afe8a37c82",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.title }}\n{{ $json.content }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "IT",
+              "description": "News aus dem IT-Bereich"
+            },
+            {
+              "category": "Inland",
+              "description": "Inlandnews aus Deutschland"
+            },
+            {
+              "category": "Ausland",
+              "description": "News aus dem Ausland"
+            },
+            {
+              "category": "Other",
+              "description": "Alles andere"
+            }
+          ]
+        },
+        "options": {
+          "enableAutoFixing": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -2912
+      ],
+      "id": "1aea4057-de4c-4660-9394-ebf962446211",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f53b44ee-98c9-414b-ad71-6906f66ce417",
+              "name": "category",
+              "value": "Inland",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -3008
+      ],
+      "id": "f3f19346-15a0-4930-9452-768b8c1e6fda",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        800,
+        -2624
+      ],
+      "id": "2901c7a6-d4cd-4f93-a285-32d6487c83ee",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "xF8kLOLuWQ59wwql",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ich habe hier Nachrichten des Tages:\n---\n{{ $json.html }}\n---\nSchreibe mir dazu einen kurzen Teaser im HTML Format, den ich über den Nachrichte platzieren möchte. Ich möchte einen reinen HTML-Body ohne <body>, Headline oder irgendwelche anderen Zusätze.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2640,
+        -2752
+      ],
+      "id": "25afdfb1-c4ad-4f07-9482-ee6b48008174",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1296,
+        -2848
+      ],
+      "id": "189093ce-cdd8-4216-bc3e-04855efcc8a4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "94a45b07-d907-40b2-bd56-7f769ef39487",
+              "name": "trigger",
+              "value": "schedule",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1072,
+        -2848
+      ],
+      "id": "05bab560-0104-4714-995d-22dc1128f045",
+      "name": "Set trigger to \"schedule\""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "04140683-0872-43f4-9f36-8e28c7f70580",
+              "name": "trigger",
+              "value": "webhook",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1072,
+        -2656
+      ],
+      "id": "d5927096-5d17-4b1f-8416-8a9ab5bcc426",
+      "name": "Set trigger to \"webhook\""
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        -2752
+      ],
+      "id": "5a6f2519-20c7-4988-b0d5-a04d5f5ad3e1",
+      "name": "Collect trigger"
+    },
+    {
+      "parameters": {
+        "fromEmail": "kai.boerner@web.de",
+        "toEmail": "kai.boerner@web.de",
+        "subject": "Tagesschau News",
+        "html": "={{ $('HTML').item.json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        3440,
+        -2848
+      ],
+      "id": "47cafe20-cb9c-4488-8c31-efbf56c46b6a",
+      "name": "Send email",
+      "webhookId": "37acce96-782b-4cc6-bebf-e7a21884f9af",
+      "credentials": {
+        "smtp": {
+          "id": "Q5mKxLDHlqQLmOfz",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2720,
+        -2528
+      ],
+      "id": "669668f2-dcc8-40d4-a820-09c5bc569c43",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "xF8kLOLuWQ59wwql",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "=Scheduled Workflow {{ $workflow.name }} succeeded at {{ $now }}",
+        "priority": 0,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        3664,
+        -2848
+      ],
+      "id": "12cd4fb6-9bbe-4bb6-8ddb-64c877641ea9",
+      "name": "Push a message",
+      "credentials": {
+        "pushoverApi": {
+          "id": "Oj0LG1ETGfTVn9Zm",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1e0617ea-e9eb-4ff6-8aff-38922ce1fe60",
+              "name": "category",
+              "value": "IT",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -3200
+      ],
+      "id": "45ab9f53-18ba-4948-b5a7-cb4a84a9f934",
+      "name": "Set category to IT"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5428da89-e703-41ed-bc29-1b994624261a",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "a07434a0-5a79-4ee8-b53e-5957ea999966",
+              "name": "source",
+              "value": "Tagesschau RSS-Feed",
+              "type": "string"
+            },
+            {
+              "id": "d07f3211-b7cf-4b70-b553-dd4bd7754fc9",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "40467e1b-eddf-4177-a2f9-46742db64f6b",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "939cfe2f-cdd5-4c96-87d1-eb5e88a523ce",
+              "name": "content",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -176,
+        -2848
+      ],
+      "id": "ad213bae-31c1-4ddb-9840-b569bf41ab97",
+      "name": "Set item data from RSS"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "95c4b120-ad33-45b2-99b8-d17f9819e321",
+              "name": "url",
+              "value": "={{ $json.detailsweb }}",
+              "type": "string"
+            },
+            {
+              "id": "fd36c43b-f6ae-4b37-bf99-df5bb48c5dae",
+              "name": "source",
+              "value": "Tagesschau Homepage",
+              "type": "string"
+            },
+            {
+              "id": "5567ce63-ce62-4168-9769-41a150d985f1",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "3c65afad-efbc-4857-8ba4-6fa002123909",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "e8ad1124-9f1b-4ac8-b943-ff4d335aedb4",
+              "name": "content",
+              "value": "={{ $json.content[0].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -176,
+        -2656
+      ],
+      "id": "444f1fa3-756a-4044-bb24-4c9a530d59bc",
+      "name": "Set item data from Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7fcf04ab-6b45-4078-9429-f2ae0bb2bbe6",
+              "name": "category",
+              "value": "Ausland",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -2816
+      ],
+      "id": "a9bd69df-d392-4cc6-a652-2633bf514871",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1bd6071d-adf8-4cf8-ae12-82d1818accb0",
+              "name": "category",
+              "value": "Other",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -2624
+      ],
+      "id": "968a1dbd-113d-488c-9a11-c50a8303b84f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f629f121-7cdd-4ee7-bf45-3aacb19d48f0",
+              "leftValue": "={{ $json.category }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        496,
+        -2752
+      ],
+      "id": "7d210328-f32d-47e7-90fb-5e21678185e6",
+      "name": "new URL",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1520,
+        -2752
+      ],
+      "id": "a44640d1-f1d2-467f-a893-fab8aa05118c",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3a0c0d20-37c4-4dee-a178-487ac4d60276",
+              "leftValue": "={{ [\"IT\"] }}",
+              "rightValue": "={{ $json.category }}",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1744,
+        -2752
+      ],
+      "id": "99347ece-3cee-47ff-86f9-b662f3a3b2aa",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eRC8A4pTDFi85J0v",
+          "mode": "list",
+          "cachedResultName": "newsfeed",
+          "cachedResultUrl": "/projects/ejSocONKjUWJaGs9/datatables/eRC8A4pTDFi85J0v"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "url",
+              "keyValue": "={{ $json.url }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "url": "={{ $json.url }}",
+            "source": "={{ $json.source }}",
+            "title": "={{ $json.title }}",
+            "date": "={{ $json.date }}",
+            "content": "={{ $json.content }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        -2752
+      ],
+      "id": "d4cca953-9c93-42f7-b805-033fef0526c6",
+      "name": "Upsert row(s)"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eRC8A4pTDFi85J0v",
+          "mode": "list",
+          "cachedResultName": "newsfeed",
+          "cachedResultUrl": "/projects/ejSocONKjUWJaGs9/datatables/eRC8A4pTDFi85J0v"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "category": "={{ $json.category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        -2976
+      ],
+      "id": "8bd87438-3332-41eb-b623-cb5acfafd2e1",
+      "name": "Update row(s)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9363d56-0188-42cd-8446-39b0536f2cb3",
+              "name": "html",
+              "value": "=<article>\n  <div class=\"card\">\n    <div class=\"card-header\">\n      <h2 class=\"card-title\">{{ $json.title }}</h2>\n    </div>\n    <div class=\"card-body\">\n      {{ $json.content }}\n      <hr>\n      <a class=\"card-link\" href=\"{{ $json.url }}\">{{ $json.url }}</a>\n    </div>\n    <div class=\"card-footer\">\n      ({{ $json.source }}, {{ $json.category }}, {{ $json.date }})\n    </div>\n  </div>\n</article>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        -2752
+      ],
+      "id": "08694a88-4c07-47a8-b084-d515a975dd83",
+      "name": "Create item HTML"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "23d381e7-52ce-4613-84c8-01d772bd306f",
+              "leftValue": "={{ $('Collect trigger').item.json.trigger }}",
+              "rightValue": "schedule",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3216,
+        -2752
+      ],
+      "id": "34d42978-12b6-4060-9ff6-1e239359b228",
+      "name": "Schedule?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a83cab15-4bed-4901-a1a3-b618f48aff11",
+              "name": "html",
+              "value": "={{ $json.html.join(\"<br>\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2416,
+        -2752
+      ],
+      "id": "004877b4-cf8e-4ed6-83a4-444414d95a0f",
+      "name": "Join HTML items"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Set item data from RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Join HTML items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Schedule?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set trigger to \"webhook\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Set item data from Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Set category to IT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set trigger to \"schedule\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set trigger to \"schedule\"": {
+      "main": [
+        [
+          {
+            "node": "Collect trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set trigger to \"webhook\"": {
+      "main": [
+        [
+          {
+            "node": "Collect trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "Push a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set category to IT": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set item data from RSS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set item data from Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "new URL": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Create item HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert row(s)": {
+      "main": [
+        [
+          {
+            "node": "new URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create item HTML": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule?": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join HTML items": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "H4pX_7vROoVHbaK2bQh_W"
+  },
+  "versionId": "b03ca4cd-09fd-4185-8970-a051ba85b745",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eb999fbe76e1a8cf24994b36377346ee97f035ae2497c06dc067100c25568c29"
+  },
+  "id": "SVSg2JuGON35JrG4",
+  "tags": []
+}

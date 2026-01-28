@@ -1,0 +1,178 @@
+{
+  "name": "Tag 1 News Reader",
+  "nodes": [
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        640,
+        0
+      ],
+      "id": "d1c4a503-421a-464d-a967-7f7a0b529d60",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "url": "https://www.tagesschau.de/xml/rss2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "454f9b5b-7c64-44e3-81f7-2e4ebd86c988",
+      "name": "Read RSS"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "23430efb-1b16-4b63-a501-02875ed28760",
+      "name": "Start"
+    },
+    {
+      "parameters": {
+        "html": "{{ $json.text }}"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        0
+      ],
+      "id": "60d0295d-6690-494f-baba-6e12137ae471",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31ade490-5294-4af1-a7b9-802df4364590",
+              "name": "text",
+              "value": "={{ $json.title }}\n{{ $json['content:encoded'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        0
+      ],
+      "id": "03a09074-b530-49fc-a4a1-00ae51791df2",
+      "name": "Set Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "37ce5a8d-9e6a-4aab-8ce8-ef551d60dcf1",
+              "name": "text",
+              "value": "={{ $json.text.join(\"<hr>\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        0
+      ],
+      "id": "b953006c-0247-4a1b-9c9b-4470839b903e",
+      "name": "Set HTML"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Set HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read RSS": {
+      "main": [
+        [
+          {
+            "node": "Set Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Read RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Data": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set HTML": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "3a63b008-1c72-4cbe-8a0a-3455351eb3c4",
+  "meta": {
+    "instanceId": "eb999fbe76e1a8cf24994b36377346ee97f035ae2497c06dc067100c25568c29"
+  },
+  "id": "irHJFpSE9jGchbcd0f_cA",
+  "tags": []
+}
