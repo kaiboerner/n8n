@@ -1,0 +1,394 @@
+{
+  "name": "02 Telegram Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -592,
+        -160
+      ],
+      "id": "f61c5df2-443e-40da-b048-d12a55d78129",
+      "name": "When chat message received",
+      "webhookId": "3f070370-69fe-499d-bb48-e62e2e893a9e"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b74f8375-5cf6-4939-9c4e-b7cd58159e00",
+              "name": "id",
+              "value": "={{ $json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "cf5234d2-9e07-4046-aa4c-c69f19586eaa",
+              "name": "message",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "b6137519-75cf-4011-9287-525214fe7a99",
+              "name": "trigger",
+              "value": "chat",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        -160
+      ],
+      "id": "4290ca97-1218-4150-b2dd-841eaa22292a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output }}",
+        "waitUserReply": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -160
+      ],
+      "id": "f043528c-3b98-4317-9954-31aa133966a9",
+      "name": "Respond to Chat"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "chatIds": "-5100371691",
+          "userIds": "7932349853"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        32
+      ],
+      "id": "2fc295fa-e123-4c73-8671-2f08bfa3c52a",
+      "name": "Telegram Trigger",
+      "webhookId": "c0a2cdae-9d29-4041-8edc-2c8879cdd364",
+      "credentials": {
+        "telegramApi": {
+          "id": "XMcPP8pC9yUYzB22",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e90e8f70-7e2a-41e2-a925-074ee3955686",
+              "name": "id",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "ee4e018e-51c2-4a64-a53e-648b1988fd94",
+              "name": "message",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "371606e0-a6ae-450d-a6d0-ce5b0660a191",
+              "name": "trigger",
+              "value": "telegram",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        32
+      ],
+      "id": "72751221-6049-4dd4-b24b-2a45869425ee",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -144,
+        -64
+      ],
+      "id": "81297532-8549-4e71-afee-d6db5bd296ef",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Merge').item.json.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        32
+      ],
+      "id": "45033cb4-442c-4c79-ac17-a016b60b4353",
+      "name": "Send a text message",
+      "webhookId": "d0bd7a2d-99ef-46da-ac11-6bcc6acd5f09",
+      "credentials": {
+        "telegramApi": {
+          "id": "XMcPP8pC9yUYzB22",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Merge').item.json.trigger }}",
+                    "rightValue": "chat",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a4fc9a69-b1ed-451f-bc5c-8ba231cf4ea9"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        -64
+      ],
+      "id": "f5174d54-ba89-49b7-a60c-153749c966c3",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "Du bist Kai The Burner, das Allround-Genie.\nDu antwortest immer auf deutsch."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        80,
+        -64
+      ],
+      "id": "24dc88f6-a7c1-4d38-ac7a-1bc1766f3bcd",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        160
+      ],
+      "id": "22cccd42-bd90-4f5b-8e94-cc24c57274f3",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "vTYqBdtKOUM6SpES",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        160
+      ],
+      "id": "5d3ca440-5e96-4f4b-b543-5d7b65b775e3",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Respond to Chat": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Respond to Chat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "ZgRERlb7YOFD2Fgh"
+  },
+  "versionId": "a62e6a48-eb04-4d23-bc3e-924453e96382",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "MZDwtvyKiA9GfDvo",
+  "tags": []
+}

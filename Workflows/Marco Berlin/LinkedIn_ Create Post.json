@@ -1,0 +1,234 @@
+{
+  "name": "LinkedIn: Create Post",
+  "nodes": [
+    {
+      "parameters": {
+        "person": "RBOoCg9D2M",
+        "text": "={{ $json.content }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {
+          "visibility": "CONNECTIONS"
+        }
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        0,
+        160
+      ],
+      "id": "3f7a4f0d-38bc-4048-a99d-2cff5cbb6a33",
+      "name": "LinkedIn Testpost",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "JlWqiNdEtFN2YClG",
+          "name": "LinkedIn account (Test)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "person": "-6pKOcQkSC",
+        "text": "={{ $json.content }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fb33d271-9962-4fce-a458-9c7009b9e664",
+      "name": "LinkedIn Post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "ZuyAVu4vxvRDPFan",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8c13cbc0-ce3d-4b9d-b61e-4d6d4e831e7c",
+              "name": "link",
+              "value": "=https://www.linkedin.com/feed/update/{{  $json.urn }}/",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        64
+      ],
+      "id": "d8357f03-5ece-494c-ab87-bb8898b8f15b",
+      "name": "Return"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "content"
+            },
+            {
+              "name": "data",
+              "type": "any"
+            },
+            {
+              "name": "test",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -448,
+        64
+      ],
+      "id": "acebeb3f-38d5-4b37-a180-b33e9185e7c4",
+      "name": "Start"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "070645b7-a7dd-490e-838a-f1a99df2f1ce",
+                    "leftValue": "={{ $json.content && $json.data && !$json.test }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "live"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "503779cf-3e85-4462-9eb3-323b6801db8b",
+                    "leftValue": "={{ $json.content && $json.data && $json.test }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "test"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -256,
+        64
+      ],
+      "id": "40ad4689-940a-4643-9789-67ee7be88549",
+      "name": "Switch"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "LinkedIn Testpost": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn Post": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn Post",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LinkedIn Testpost",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "5a008822-dcd8-42d9-9270-ea0d071a8850",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "xmZBUj76tXSEksMK",
+  "tags": []
+}

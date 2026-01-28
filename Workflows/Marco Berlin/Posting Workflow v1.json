@@ -1,0 +1,1747 @@
+{
+  "name": "Posting Workflow v1",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Output",
+        "height": 80,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3232,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "39aff7d2-cea3-4021-a47c-99f62f5f2599",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Agent",
+        "height": 80,
+        "width": 1232,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1984,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "be9a5782-408f-4a75-841c-7bd6d42fa435",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Trigger",
+        "height": 80,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "1a9787da-8a2c-4660-93f4-baff19a7278a",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Input",
+        "height": 80,
+        "width": 1462,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "a4584788-f142-4f39-b610-189a95ef3e71",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "formTitle": "Post",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "context"
+            },
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "multipleFiles": false
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        304
+      ],
+      "id": "bcddfb33-0573-48fb-a399-56519a879b2c",
+      "name": "Formular",
+      "webhookId": "c72f3a52-abc2-4b61-a6db-81c0caba7ded"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"postMessage\": {\n\t\t\t\"type\": \"string\"\n\t\t},\n\t\t\"picturePrompt\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2288,
+        832
+      ],
+      "id": "c7b0f4ad-7ae4-4552-8c0e-a10bc71f1cdb",
+      "name": "Json"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2144,
+        832
+      ],
+      "id": "4f43dcfa-af58-4c13-afcb-4fd1152a15d0",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "content": "## Context",
+        "height": 848,
+        "width": 822,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1152,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "13a4edbd-a699-4bb2-9ded-60efd67828f7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Info\nWorkflow from [n8n Masterclass](https://www.skool.com/n8n-masterclass/classroom/b14b0a65?md=a73a0a9ea65e43f88f3cff19e0f30694)\nWorkflow by [Marco Berlin](https://www.skool.com/@marcoberlin?g=n8n-masterclass)",
+        "height": 112,
+        "width": 496,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "2139c574-635e-4520-a301-ea770ad88ab7",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Save Draft",
+        "height": 848,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3232,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "3cac2e9a-b284-4d3d-8f15-93da4d638c4f",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Create Text",
+        "height": 848,
+        "width": 496,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1984,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "d31644d8-a8d4-4c0a-aa15-701c9fc20f80",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "content": "## Create Image",
+        "height": 848,
+        "width": 720,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2496,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "a6f9d011-3cc9-409f-acfe-368725323b8b",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "DOi4EJwJpC1nQJQZ",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/DOi4EJwJpC1nQJQZ",
+          "cachedResultName": "Freepik: Create Image"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt": "={{ $json.output.prompt }}"
+          },
+          "matchingColumns": [
+            "output"
+          ],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2656,
+        1232
+      ],
+      "name": "Freepik",
+      "id": "bff4e65c-e241-464d-b36c-5cb6e341870c",
+      "notes": "Icon: https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_1e675c32f7221a0f80899f3b34bd7487/freepik.png"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        2944,
+        1232
+      ],
+      "id": "c819e191-a1db-4f01-8b8e-9cd729326b10",
+      "name": "KIE API",
+      "notes": "Icon: https://kie.ai/logo.png"
+    },
+    {
+      "parameters": {
+        "content": "## Formular",
+        "height": 272,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "9492bd6e-4a6a-4d8d-8b87-d35021547f4b",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 2,
+              "triggerAtHour": 9,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        880
+      ],
+      "id": "7f625c73-bc7b-4a77-8781-43377dabeef3",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## Output",
+        "height": 80,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1536,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "d60261a4-dfcb-4bc9-a93e-c531fd235cfc",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "## Automation",
+        "height": 80,
+        "width": 496,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1024,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "568f14dc-62b5-49d3-bb31-89b48dd424fc",
+      "name": "Sticky Note19"
+    },
+    {
+      "parameters": {
+        "content": "## Trigger",
+        "height": 80,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "9d546e29-022c-4904-a23a-d4032db60ee0",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "content": "## Input",
+        "height": 80,
+        "width": 502,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "1e227d49-1de2-4c47-abb1-a364b6af0c46",
+      "name": "Sticky Note21"
+    },
+    {
+      "parameters": {
+        "content": "## Notification",
+        "height": 80,
+        "width": 496,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2048,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "193c01c1-268c-42e1-bd5a-f8052e61bd37",
+      "name": "Sticky Note22"
+    },
+    {
+      "parameters": {
+        "content": "## Released Posts\n- Todo: Add domain to Get Image node",
+        "height": 704,
+        "width": 502,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        1840
+      ],
+      "typeVersion": 1,
+      "id": "f52333ad-6846-4398-913e-46412d95c0a7",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Social Media",
+        "height": 704,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1536,
+        1840
+      ],
+      "typeVersion": 1,
+      "id": "bcb73f54-b4c6-49de-8ad4-d8d2bd653518",
+      "name": "Sticky Note23"
+    },
+    {
+      "parameters": {
+        "content": "## Notification\n- Todo: Add User Key to Send Notification node",
+        "height": 704,
+        "width": 496,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2048,
+        1840
+      ],
+      "typeVersion": 1,
+      "id": "8b73ed0b-f930-410c-a4c8-34abde34753d",
+      "name": "Sticky Note26"
+    },
+    {
+      "parameters": {
+        "content": "## Social Media",
+        "height": 704,
+        "width": 496,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1024,
+        1840
+      ],
+      "typeVersion": 1,
+      "id": "c5d7753f-a16e-43d8-b829-03a501039925",
+      "name": "Sticky Note27"
+    },
+    {
+      "parameters": {
+        "content": "## Trigger",
+        "height": 704,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        1840
+      ],
+      "typeVersion": 1,
+      "id": "57244359-20ea-4bc8-8bf3-b9e844e35783",
+      "name": "Sticky Note29"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 2,
+              "triggerAtHour": 9,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        176,
+        2128
+      ],
+      "id": "53d30486-0354-4335-9f60-de4c4aa2c98d",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "content": "## Post Creation",
+        "height": 1040,
+        "width": 150,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "f55de46b-c316-4c97-8ac0-50fef6286beb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Post Publishing",
+        "height": 800,
+        "width": 150,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "988939b6-d964-4108-b907-9afcbd9929ef",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xmZBUj76tXSEksMK",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/xmZBUj76tXSEksMK",
+          "cachedResultName": "Marco - LinkedIn: Create Post"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "test": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "test",
+              "displayName": "test",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1200,
+        1920
+      ],
+      "id": "407840ec-b703-43d6-b0e9-f723b1f85243",
+      "name": "LinkedIn1",
+      "notes": "Icon: https://n8n.flowdesk.de/icons/n8n-nodes-base/dist/nodes/LinkedIn/linkedin.svg"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "zdYQexJu5qRhq2wn",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zdYQexJu5qRhq2wn",
+          "cachedResultName": "LinkedIn: Create Post"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $('Generate Text').item.json.output.message }}",
+            "data": "={{ $binary.data }}"
+          },
+          "matchingColumns": [
+            "content"
+          ],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "test",
+              "displayName": "test",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1200,
+        2128
+      ],
+      "id": "cdd1569d-5585-4945-8384-fa7cdc63865f",
+      "name": "Instagram",
+      "notes": "Icon: https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "zdYQexJu5qRhq2wn",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zdYQexJu5qRhq2wn",
+          "cachedResultName": "LinkedIn: Create Post"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $('Generate Text').item.json.output.message }}",
+            "data": "={{ $binary.data }}"
+          },
+          "matchingColumns": [
+            "content"
+          ],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "test",
+              "displayName": "test",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1200,
+        2320
+      ],
+      "id": "04211657-7b80-4df0-b3cd-92c1ada8592a",
+      "name": "Facebook",
+      "notes": "Icon: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/960px-2023_Facebook_icon.svg.png"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pmkz217s0jsvlyn",
+        "table": "mzw4uesi2gt8z0i",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "text",
+              "fieldValue": "={{ $json.text }}"
+            },
+            {
+              "fieldName": "image",
+              "binaryData": true,
+              "binaryProperty": "data"
+            },
+            {
+              "fieldName": "status",
+              "fieldValue": "draft"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        3424,
+        640
+      ],
+      "id": "8e94d4cc-fb4a-494d-b3bb-ecb5bfbf9a77",
+      "name": "Create a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.context }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Rolle:\nDu bist mein Ghostwriter für LinkedIn-Posts zum Thema KI-Businessaufbau. Ich bin selbständig und möchte Reichweite auf Social Media aufbauen.\n\nSprache & Stil:\n- Schreibe auf Deutsch.\n- Schreibe in der Du-Form.\n- Keine Emojis.\n- Keine Hashtags.\n- Kurze, klare Sätze (max. 5–12 Wörter pro Satz).\n- Viele Zeilenumbrüche.\n- Eher wie gesprochene Sprache, aber präzise.\n- Direkt, ruhig, selbstbewusst.\n- Kein Marketing-Blabla, keine Floskeln, keine Übertreibungen.\n\nStruktur:\n1. Starker Einstiegssatz (Hook), der ein Problem, eine Beobachtung oder einen Fehler (max. 40 Zeichen).\n2. Leerzeile\n3. Etwas längerer Satz, der die Hook unterstreicht und auf den kommenden Text neugierig macht (max. 80 Zeichen).\n4. 5 kurze Sätze, die den Text aus der User Message aufgreifen und ein Problem greifbar machen (typische Fehler, alte Arbeitsweise, Pain Points).\n5. Dann Wendepunkt\n6. Dezent meine Erfahrung einfließen lassen\n7. Am Ende eine kurze Frage, die zur Reflexion oder Kommentaren einlädt.\n\nWichtig:\n- Antworte NUR mit dem fertigen LinkedIn-Post, ohne Erklärungen, ohne Meta-Kommentare.\n- Keine Aufzählungszeichen oder Bullet-Listen, nur Fließtext mit Zeilenumbrüchen.\n\nAusgabe:\n- postMessage: Schreibe aus der User Message einen fertigen LinkedIn-Post in meinem Stil.\n- picturePrompt: Schreibe ein Prompt auf englisch um ein einzigartiges Bild für diesen Post zu erstellen. Das Bild sollte realistisch, natürlich, aber nicht futuristisch wirken."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2144,
+        656
+      ],
+      "id": "dee8c989-168e-4b33-a7e4-1fefa964ea95",
+      "name": "Generate Text"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $('Generate Text').item.json.output.picturePrompt }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        2800,
+        736
+      ],
+      "id": "3bdf8f3b-3b69-46fe-992b-b10477fbc842",
+      "name": "Generate Image"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "Was ist auf dem Bild zu sehen?",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        1600,
+        528
+      ],
+      "id": "591f6d97-4218-4e85-99bc-97087f054920",
+      "name": "Analyze Image"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1c8e2625-19e8-4d3d-853a-4da0e17eab4c",
+              "leftValue": "={{ $('Data 1').item.binary.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2560,
+        656
+      ],
+      "id": "82cd2f42-d682-4a62-99b0-7b8f297d3d80",
+      "name": "If Image1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a5b7313-035d-4520-b5bc-6a813a858553",
+              "name": "data",
+              "value": "={{ $('Data 1').item.binary.image }}",
+              "type": "binary"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2800,
+        592
+      ],
+      "id": "f4bdb1cd-2a6d-43a9-b486-0bdf97ed2094",
+      "name": "Add Image1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b6539d08-3716-413a-bb79-2108b94cae04",
+              "name": "text",
+              "value": "={{ $('Generate Text').item.json.output.postMessage }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3056,
+        640
+      ],
+      "id": "fc7a9b35-82a6-43e7-ad80-19d1e0d528d6",
+      "name": "Data 3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8aaf9586-e9a3-48f8-9385-4f9c69d88023",
+              "name": "context",
+              "value": "={{ $json.context ?? $json.text ?? $json['0'].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1824,
+        656
+      ],
+      "id": "26d7ceae-f293-4d8c-92ee-bb6fb61ea27b",
+      "name": "Data 2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        624
+      ],
+      "id": "9020519b-19ab-4c35-a472-c43840748a17",
+      "name": "Data 1"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "chatIds": "-5185044074"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        608
+      ],
+      "id": "1641aa42-9d39-41ce-848c-11098c460109",
+      "name": "Telegram Trigger",
+      "webhookId": "fca6c12b-498d-4543-b4a0-3ce301a6a365",
+      "credentials": {
+        "telegramApi": {
+          "id": "XMcPP8pC9yUYzB22",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Telegram",
+        "height": 272,
+        "width": 624,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        512
+      ],
+      "typeVersion": 1,
+      "id": "62c596a1-18de-40e1-a4b2-7ac463cf3d64",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## News",
+        "height": 272,
+        "width": 624,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        800
+      ],
+      "typeVersion": 1,
+      "id": "c11e15bc-169e-4261-8383-ec965e21d20e",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "content": "## Telegram Message",
+        "height": 272,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        512
+      ],
+      "typeVersion": 1,
+      "id": "56b4de44-9c7c-4d90-aa8a-3379a201fa87",
+      "name": "Sticky Note30"
+    },
+    {
+      "parameters": {
+        "content": "## Schedule",
+        "height": 272,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        800
+      ],
+      "typeVersion": 1,
+      "id": "5efefd04-5f08-4c2f-ae8d-392b653890bd",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        304
+      ],
+      "id": "66d7162b-2d39-4108-9792-dfbe5665f12c",
+      "name": "Prepare Data1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5fd03dad-2642-49cf-ba6b-e78dedc40165",
+              "name": "context",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        624
+      ],
+      "id": "0fa4369f-5210-45ac-8ea6-d255beada880",
+      "name": "Prepare Data2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0aaa0860-344d-41a0-9f64-0d658a2e37f6",
+              "leftValue": "={{ $json.message.photo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "00f275b2-20ff-4776-95ce-29fe94ccbdf5",
+              "leftValue": "={{ $json.message.document }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "dd1a7a40-7453-4f6d-b908-bebabee2610a",
+              "leftValue": "={{ $json.message.voice }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        560,
+        608
+      ],
+      "id": "9d4ba436-4b36-4dac-86e9-820909af6a5b",
+      "name": "If Image2"
+    },
+    {
+      "parameters": {
+        "content": "## Formular",
+        "height": 272,
+        "width": 624,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "e709d2a2-bcc8-4b5a-b494-38b6d6f1c8a0",
+      "name": "Sticky Note25"
+    },
+    {
+      "parameters": {
+        "content": "## Image Creation Subflows",
+        "height": 400,
+        "width": 720,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2496,
+        1088
+      ],
+      "typeVersion": 1,
+      "id": "038ec0db-d8d7-4b48-8ac1-239ef497f66f",
+      "name": "Sticky Note31"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "gB687KZBkYN6Yn5G",
+          "mode": "list",
+          "cachedResultName": "newsletter",
+          "cachedResultUrl": "/projects/1t47tzpqhh1gXKUE/datatables/gB687KZBkYN6Yn5G"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gt",
+              "keyValue": "={{ $now.format('yyyy-MM-dd') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        880
+      ],
+      "id": "4dacb91c-ff9d-4a15-add6-f8d0054a063b",
+      "name": "Get Newsletter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5fd03dad-2642-49cf-ba6b-e78dedc40165",
+              "name": "context",
+              "value": "={{ $json.json }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        880
+      ],
+      "id": "cb1d5479-44c1-4df0-9ea2-016b02e1eb8d",
+      "name": "Prepare Data3"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $binary.data?.mimeType }}",
+                    "rightValue": "audio/ogg",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "719ac3db-bf68-4360-95f2-b2cebdfff102"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "55b24fab-de46-4c2e-8dfb-990a9c97390d",
+                    "leftValue": "={{ $binary.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e5cebb63-77ef-4ada-b701-2fa25764ecd5",
+                    "leftValue": "={{ $json.context }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1376,
+        608
+      ],
+      "id": "a34c4b92-8f7d-4bb4-9fbc-45ecf04eff7b",
+      "name": "Check Context"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message?.document?.file_id ?? $json.message?.voice?.file_id ?? $json.message.photo.last().file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        544
+      ],
+      "id": "e5f69a6c-f22d-47a3-9aa1-f3f420d90fad",
+      "name": "Get File",
+      "webhookId": "660b4036-22bf-40e6-aa99-7ac3bb90f6c9",
+      "credentials": {
+        "telegramApi": {
+          "id": "XMcPP8pC9yUYzB22",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        1600,
+        352
+      ],
+      "id": "64c74ff2-2947-4d32-a642-5bdfc69e00c6",
+      "name": "Transcribe Voice"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mklf189abzn5ayg",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        592,
+        2128
+      ],
+      "id": "c6280c16-33dc-4329-92e6-a4ec6bc01890",
+      "name": "Get Posts",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mzw4uesi2gt8z0i",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "id",
+              "fieldValue": "={{ $('Get Posts').item.json.Id }}"
+            },
+            {
+              "fieldName": "status",
+              "fieldValue": "published"
+            },
+            {
+              "fieldName": "link",
+              "fieldValue": "={{ $json.link }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1744,
+        2128
+      ],
+      "id": "5f492283-5a17-4980-8a33-344a650fb0d3",
+      "name": "Update Post",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "=Post erstellt: {{ $json.link }}",
+        "priority": 0,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        2128
+      ],
+      "id": "a1a7a978-06b6-4a92-887e-47abf40d4db3",
+      "name": "Send Notification",
+      "credentials": {
+        "pushoverApi": {
+          "id": "VnHS1NY76QWOsgAo",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image[0].path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        784,
+        2128
+      ],
+      "id": "11288069-9e0b-4b77-8952-7aa193451065",
+      "name": "Get Image"
+    }
+  ],
+  "pinData": {
+    "Generate Text": [
+      {
+        "json": {
+          "output": {
+            "postMessage": "Zu langsam für den KI-Zug?\n\nClaude Vibe Coding bringt frischen Wind.\nViele hängen noch in alten Programmiermustern fest.\nSie übersehen, wie KI Prozesse beschleunigen kann.\nDas kostet Zeit und Geld.\nKomplexität wird oft unterschätzt.\nIch arbeite seit Jahren mit Claude und sehe, wie es den Unterschied macht.\nNutze neue Tools gezielt und wachse mit KI.\nWie hältst du Schritt mit der rasanten Entwicklung?",
+            "picturePrompt": "A focused professional working on a laptop in a modern office environment, looking thoughtfully at the screen with lines of code visible, natural lighting, realistic style, not futuristic."
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Formular": {
+      "main": [
+        [
+          {
+            "node": "Prepare Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Json": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Text",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Text",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Text": {
+      "main": [
+        [
+          {
+            "node": "If Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Data 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Image": {
+      "main": [
+        [
+          {
+            "node": "Data 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Image1": {
+      "main": [
+        [
+          {
+            "node": "Add Image1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image1": {
+      "main": [
+        [
+          {
+            "node": "Data 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data 2": {
+      "main": [
+        [
+          {
+            "node": "Generate Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data 1": {
+      "main": [
+        [
+          {
+            "node": "Check Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data 3": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Data1": {
+      "main": [
+        [
+          {
+            "node": "Data 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Image2": {
+      "main": [
+        [
+          {
+            "node": "Get File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Data2": {
+      "main": [
+        [
+          {
+            "node": "Data 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Newsletter": {
+      "main": [
+        [
+          {
+            "node": "Prepare Data3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Data3": {
+      "main": [
+        [
+          {
+            "node": "Data 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Context": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Voice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Analyze Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Data 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File": {
+      "main": [
+        [
+          {
+            "node": "Prepare Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Voice": {
+      "main": [
+        [
+          {
+            "node": "Data 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn1": {
+      "main": [
+        [
+          {
+            "node": "Update Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Posts": {
+      "main": [
+        [
+          {
+            "node": "Get Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Post": {
+      "main": [
+        [
+          {
+            "node": "Send Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "149ab0ac-2d3e-450c-b667-e58962ecfa56",
+  "meta": {
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "1yRzGNfV7tgqemRC",
+  "tags": []
+}

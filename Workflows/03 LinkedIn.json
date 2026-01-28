@@ -1,0 +1,148 @@
+{
+  "name": "03 LinkedIn",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a95cbadb-be41-413d-bba5-4f91e2f6325c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "person": "RBOoCg9D2M",
+        "text": "=# {{ $json.Title }}\n\n{{ $json.Text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "c9fe162d-bcea-43bd-b2bc-95a6833d51a8",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "JlWqiNdEtFN2YClG",
+          "name": "LinkedIn account (Test)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mklf189abzn5ayg",
+        "options": {
+          "viewId": "vwbla0wwzz5dol9e"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1872fc6d-b17f-454e-8fe8-e2bf537ab8be",
+      "name": "Get many rows",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mklf189abzn5ayg",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $('Get many rows').item.json.Id }}"
+            },
+            {
+              "fieldName": "Published",
+              "fieldValue": "={{ $now }}"
+            },
+            {
+              "fieldName": "URL",
+              "fieldValue": "=https://www.linkedin.com/feed/update/{{ $json.urn }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "d4cdfdd0-73f5-4b31-a826-6dd064033fe3",
+      "name": "Update a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a post": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "d917ceba-330d-4c8e-872d-d1a3907f10f8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "RPIRE89IOPkbuP2I",
+  "tags": []
+}

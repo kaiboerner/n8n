@@ -9,7 +9,7 @@
         0,
         0
       ],
-      "id": "ee0c715c-9032-4d54-8995-2a4cd4c91d8c",
+      "id": "5b2bee2d-0caa-4816-ace5-cf88c1198ff2",
       "name": "Error Trigger"
     },
     {
@@ -25,11 +25,11 @@
         224,
         0
       ],
-      "id": "9d1a3cdd-4899-4fb6-a87c-eb190a27b6b4",
+      "id": "38c2e0e6-fadc-429f-a33e-62aa29137ed0",
       "name": "Push a message",
       "credentials": {
         "pushoverApi": {
-          "id": "Oj0LG1ETGfTVn9Zm",
+          "id": "VnHS1NY76QWOsgAo",
           "name": "Pushover account"
         }
       }
@@ -52,16 +52,13 @@
   "active": true,
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false,
-    "timeSavedMode": "fixed",
-    "timezone": "Europe/Berlin",
-    "callerPolicy": "workflowsFromSameOwner"
+    "availableInMCP": false
   },
-  "versionId": "c6c823f4-8cff-4eae-b861-8e23090b4e40",
+  "versionId": "823a5405-ac9b-4dae-a522-9dbacc9dab36",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "eb999fbe76e1a8cf24994b36377346ee97f035ae2497c06dc067100c25568c29"
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
   },
-  "id": "H4pX_7vROoVHbaK2bQh_W",
+  "id": "ZgRERlb7YOFD2Fgh",
   "tags": []
 }
