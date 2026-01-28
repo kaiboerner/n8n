@@ -6,8 +6,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -32,
-        -176
+        -144,
+        288
       ],
       "id": "e1865327-4701-492f-9b3c-70f81cd225fc",
       "name": "When clicking ‘Execute workflow’"
@@ -20,8 +20,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        640,
-        -80
+        816,
+        -112
       ],
       "id": "5b28707a-3b24-49cf-808a-644f31f12e60",
       "name": "Split Out"
@@ -34,8 +34,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        192,
-        -80
+        304,
+        -112
       ],
       "id": "ff3c25aa-4501-4806-a03a-643a16a9cd1b",
       "name": "Load Index Page"
@@ -61,8 +61,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        416,
-        -80
+        528,
+        -112
       ],
       "id": "5b17de3d-9987-4d3f-8ea6-dff55d95bf36",
       "name": "Extract Articles"
@@ -86,8 +86,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        864,
-        -80
+        1104,
+        -112
       ],
       "id": "10a39c53-c57e-4c13-bfa5-b3ee70436847",
       "name": "Extract Article Link"
@@ -109,8 +109,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1088,
-        -80
+        1328,
+        -112
       ],
       "id": "64d13c76-359e-4b0c-9812-a104d81fdffd",
       "name": "Build URL"
@@ -134,8 +134,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1536,
-        -80
+        1776,
+        -112
       ],
       "id": "0977cdc0-155f-4dd1-a834-dc8c1db9814c",
       "name": "Merge"
@@ -148,8 +148,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1760,
-        -80
+        2000,
+        -112
       ],
       "id": "c8098f20-f72e-4cd2-bb6b-702dc6b172f5",
       "name": "Load Article"
@@ -191,8 +191,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        1984,
-        -80
+        2224,
+        -112
       ],
       "id": "15f94ed8-7b85-476d-9f73-cef8d4727514",
       "name": "Extract Headline & Co."
@@ -205,8 +205,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        2208,
-        -80
+        2448,
+        -112
       ],
       "id": "5e60bbf0-e63a-44f6-8c9e-b203ae207c7d",
       "name": "Load Image"
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        2432,
-        -80
+        2672,
+        -112
       ],
       "id": "cae6e53e-6c13-49d8-b849-deaed877494f",
       "name": "Save to DB",
@@ -276,8 +276,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        1312,
-        -152
+        1552,
+        -176
       ],
       "id": "75000433-4452-4e62-9d9a-9634b9a7dca0",
       "name": "Search in DB",
@@ -291,10 +291,363 @@
     },
     {
       "parameters": {
+        "promptType": "define",
+        "text": "={{ JSON.stringify($json) }}",
+        "options": {
+          "systemMessage": "Rolle:\nDu bist mein Ghostwriter für LinkedIn-Posts zum Thema KI-News.\n\nSprache & Stil:\n- Schreibe auf Deutsch.\n- Schreibe in der Du-Form.\n- Keine Emojis.\n- Keine Hashtags.\n- Kurze, klare Sätze (max. 5–12 Wörter pro Satz).\n- Viele Zeilenumbrüche.\n- Eher wie gesprochene Sprache, aber präzise.\n- Direkt, ruhig, selbstbewusst.\n- Kein Marketing-Blabla, keine Floskeln, keine Übertreibungen.\n\nStruktur:\n1. Starker Einstiegssatz (Hook), der ein Problem, eine Beobachtung oder einen Fehler (max. 40 Zeichen).\n2. Leerzeile\n3. Etwas längerer Satz, der die Hook unterstreicht und auf den kommenden Text neugierig macht (max. 80 Zeichen).\n4. 5 kurze Sätze, die den Text aus der User Message aufgreifen und ein Problem greifbar machen (typische Fehler, alte Arbeitsweise, Pain Points).\n5. Dann Wendepunkt\n6. Dezent meine Erfahrung einfließen lassen\n7. Am Ende eine kurze Frage, die zur Reflexion oder Kommentaren einlädt.\n\nWichtig:\n- Antworte NUR mit dem fertigen LinkedIn-Post, ohne Erklärungen, ohne Meta-Kommentare.\n- Keine Aufzählungszeichen oder Bullet-Listen, nur Fließtext mit Zeilenumbrüchen."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        752,
+        96
+      ],
+      "id": "a2a9a76f-8aa2-4f86-9487-be8211a0a383",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "text"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        832,
+        320
+      ],
+      "id": "5104634f-e344-46f5-a12b-e0f46e7619d1",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "vTYqBdtKOUM6SpES",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8b7949d-7fa6-44ec-9ca9-4957759c8403",
+              "name": "Headline",
+              "value": "={{ $json.Headline }}",
+              "type": "string"
+            },
+            {
+              "id": "00d8f773-c2ab-4c0b-a600-f800e2a52974",
+              "name": "Summary",
+              "value": "={{ $json.Summary }}",
+              "type": "string"
+            },
+            {
+              "id": "c864bef5-c0e7-42b8-9dc9-aebd52d78cb4",
+              "name": "Content",
+              "value": "={{ $json.Content }}",
+              "type": "string"
+            },
+            {
+              "id": "07b0d05a-e624-425e-bd2c-77be03bbbb63",
+              "name": "Source",
+              "value": "={{ $json.URL }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        192
+      ],
+      "id": "5fd0174f-1673-475f-b340-781c71e52aeb",
+      "name": "Prepare Data"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "m8d4xi5cbrqzeo0",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Source",
+              "fieldValue": "={{ $('Prepare Data').item.json.Source }}"
+            },
+            {
+              "fieldName": "Text",
+              "fieldValue": "={{ $json.output }}"
+            },
+            {
+              "fieldName": "Image",
+              "binaryData": true,
+              "binaryProperty": "data"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        192
+      ],
+      "id": "9f0cb5e8-16e1-4ad2-8fc7-8d379b0476f2",
+      "name": "Insert into LinkedIn",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $('Get ACK KI-News').item.json.Id }}"
+            },
+            {
+              "fieldName": "Status",
+              "fieldValue": "Published"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1552,
+        192
+      ],
+      "id": "9e6ef76e-0fe4-4a7c-bae6-cd89f68823c9",
+      "name": "Update a row",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://nocodb.kai-boerner.de/{{ $('Get ACK KI-News').item.json.Image[0].signedPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1104,
+        192
+      ],
+      "id": "3ed49773-ae3a-45f5-81fb-22916c965ab7",
+      "name": "Load Image1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        80,
+        192
+      ],
+      "id": "ff5e4e76-7faf-439b-a51c-2f8ef58b9b79",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "returnAll": true,
+        "options": {
+          "where": "(Status,eq,ACK)"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        304,
+        192
+      ],
+      "id": "25213cf4-32f5-48ba-9508-8ca20b156500",
+      "name": "Get ACK KI-News",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "m8d4xi5cbrqzeo0",
+        "returnAll": true,
+        "options": {
+          "where": "(Status,eq,ACK)"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        304,
+        496
+      ],
+      "id": "48d9eb97-c0d6-4e91-b39e-618e6c0c1c61",
+      "name": "Get ACK LinkedIn-Posts",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://nocodb.kai-boerner.de/{{ $json.Image[0].signedPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        528,
+        496
+      ],
+      "id": "652d17db-fa59-4973-be29-23ec7e3ed51b",
+      "name": "Load Image2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xmZBUj76tXSEksMK",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/xmZBUj76tXSEksMK",
+          "cachedResultName": "LinkedIn: Create Post"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "test": true,
+            "content": "={{ $json.Text }}",
+            "data": "={{ $binary.data }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "test",
+              "displayName": "test",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        496
+      ],
+      "id": "93cb0acf-7425-4a0e-8043-e0b8445124ff",
+      "name": "Call 'LinkedIn: Create Post'"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "update",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "m8d4xi5cbrqzeo0",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Id",
+              "fieldValue": "={{ $('Get ACK LinkedIn-Posts').item.json.Id }}"
+            },
+            {
+              "fieldName": "LinkedIn",
+              "fieldValue": "={{ $json.link }}"
+            },
+            {
+              "fieldName": "Status",
+              "fieldValue": "Published"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        496
+      ],
+      "id": "b176c8e7-d0c4-4389-aceb-489f3e2779a1",
+      "name": "Update a row1",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes"
             }
           ]
         }
@@ -302,11 +655,85 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -32,
-        16
+        -144,
+        96
       ],
-      "id": "0598ebaf-f52e-4bc1-ae7a-dbbd38519818",
+      "id": "916b3c71-7529-45d5-a90d-3896d3a81c70",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "New KI-News created",
+        "priority": 0,
+        "additionalFields": {
+          "url": "=https://nocodb.kai-boerner.de/dashboard/#/nc/pi2aa8f3z9jcs06/mr8lj0zudzljtb9/vwbaxe9edbj7f0y2/ki-news-kanban"
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        -112
+      ],
+      "id": "b603cbf8-dda8-4744-8c82-fbf9540ac24b",
+      "name": "Push a message",
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "VnHS1NY76QWOsgAo",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "New LinkedIn-Post created",
+        "priority": 0,
+        "additionalFields": {
+          "url": "https://nocodb.kai-boerner.de/dashboard/#/nc/pi2aa8f3z9jcs06/m8d4xi5cbrqzeo0/vwbyyw7bn1fenvmq/linkedin-kanban"
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        192
+      ],
+      "id": "e85e98de-abbf-46ab-8f7f-d1686e058180",
+      "name": "Push a message1",
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "VnHS1NY76QWOsgAo",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "Posted to LinkedIn",
+        "priority": 0,
+        "additionalFields": {
+          "url": "={{ $('Call \\'LinkedIn: Create Post\\'').item.json.link }}"
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        496
+      ],
+      "id": "566384ad-3a1f-4d15-be05-3a3236c94dee",
+      "name": "Push a message2",
+      "credentials": {
+        "pushoverApi": {
+          "id": "VnHS1NY76QWOsgAo",
+          "name": "Pushover account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -315,9 +742,9 @@
       "main": [
         [
           {
-            "node": "Load Index Page",
+            "node": "Merge1",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -437,11 +864,164 @@
         ]
       ]
     },
-    "Schedule Trigger": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Load Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Data": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert into LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Image1": {
+      "main": [
+        [
+          {
+            "node": "Insert into LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
       "main": [
         [
           {
             "node": "Load Index Page",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get ACK KI-News",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get ACK LinkedIn-Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get ACK KI-News": {
+      "main": [
+        [
+          {
+            "node": "Prepare Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get ACK LinkedIn-Posts": {
+      "main": [
+        [
+          {
+            "node": "Load Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Image2": {
+      "main": [
+        [
+          {
+            "node": "Call 'LinkedIn: Create Post'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LinkedIn: Create Post'": {
+      "main": [
+        [
+          {
+            "node": "Update a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to DB": {
+      "main": [
+        [
+          {
+            "node": "Push a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "Push a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row1": {
+      "main": [
+        [
+          {
+            "node": "Push a message2",
             "type": "main",
             "index": 0
           }
@@ -456,10 +1036,10 @@
     "timeSavedMode": "fixed",
     "timezone": "Europe/Berlin",
     "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
-    "errorWorkflow": "ZgRERlb7YOFD2Fgh"
+    "errorWorkflow": "ZgRERlb7YOFD2Fgh",
+    "saveManualExecutions": false
   },
-  "versionId": "2602eef7-3b4c-4024-bca1-2d485dc58d63",
+  "versionId": "fb02ed00-6ae9-4b4d-be04-245dd8444946",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"

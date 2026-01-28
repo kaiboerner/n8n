@@ -14,7 +14,7 @@
       "typeVersion": 1,
       "position": [
         0,
-        160
+        192
       ],
       "id": "3f7a4f0d-38bc-4048-a99d-2cff5cbb6a33",
       "name": "LinkedIn Testpost",
@@ -64,8 +64,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        304,
-        64
+        224,
+        96
       ],
       "id": "d8357f03-5ece-494c-ab87-bb8898b8f15b",
       "name": "Return"
@@ -92,7 +92,7 @@
       "typeVersion": 1.1,
       "position": [
         -448,
-        64
+        96
       ],
       "id": "acebeb3f-38d5-4b37-a180-b33e9185e7c4",
       "name": "Start"
@@ -158,8 +158,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -256,
-        64
+        -224,
+        96
       ],
       "id": "40ad4689-940a-4643-9789-67ee7be88549",
       "name": "Switch"
@@ -217,6 +217,11 @@
           }
         ]
       ]
+    },
+    "Return": {
+      "main": [
+        []
+      ]
     }
   },
   "active": true,
@@ -224,7 +229,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "5a008822-dcd8-42d9-9270-ea0d071a8850",
+  "versionId": "16d2e7f2-4ed6-4ce3-9736-eb7739b9167c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
