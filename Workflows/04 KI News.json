@@ -1,0 +1,230 @@
+{
+  "name": "04 KI News",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        816
+      ],
+      "id": "e1865327-4701-492f-9b3c-70f81cd225fc",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -144,
+        624
+      ],
+      "id": "916b3c71-7529-45d5-a90d-3896d3a81c70",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "t7V09QJhyGPafBLH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/t7V09QJhyGPafBLH",
+          "cachedResultName": "04.01 Content Scraping"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        720
+      ],
+      "id": "dcdb404c-1edc-40d7-8c09-db47a6faaafa",
+      "name": "Call '04.01 Content Scraping'",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "uDMncQPbtppr1bvo",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/uDMncQPbtppr1bvo",
+          "cachedResultName": "04.02 Prepare LinkedIn Post"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        720
+      ],
+      "id": "c3bbb41a-0eb2-49c3-bd4e-7237eedd6487",
+      "name": "Call '04.02 Prepare LinkedIn Post'",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "Xy2XsC9mV4POFBID",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Xy2XsC9mV4POFBID",
+          "cachedResultName": "04.03 Post to LinkedIn"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        720
+      ],
+      "id": "0b8439d8-2f88-4f23-889b-1424a7ece0ae",
+      "name": "Call '04.03 Post to LinkedIn'",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "uTV3Ia1ecjkvyguD",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/uTV3Ia1ecjkvyguD",
+          "cachedResultName": "04.04 Maintenance"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        720
+      ],
+      "id": "af6bb4e8-4a24-47bf-9d44-ecc7529a8967",
+      "name": "Call '04.04 Maintenance'",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Call '04.01 Content Scraping'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Call '04.01 Content Scraping'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '04.01 Content Scraping'": {
+      "main": [
+        [
+          {
+            "node": "Call '04.02 Prepare LinkedIn Post'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '04.02 Prepare LinkedIn Post'": {
+      "main": [
+        [
+          {
+            "node": "Call '04.03 Post to LinkedIn'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '04.03 Post to LinkedIn'": {
+      "main": [
+        [
+          {
+            "node": "Call '04.04 Maintenance'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "ZgRERlb7YOFD2Fgh",
+    "saveManualExecutions": false
+  },
+  "versionId": "c26c14fe-0141-4750-8f8b-4147a01d95b9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "7u6mbblgoqmi5kmG",
+  "tags": []
+}

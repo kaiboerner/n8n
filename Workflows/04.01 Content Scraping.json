@@ -1,0 +1,500 @@
+{
+  "name": "04.01 Content Scraping",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        16
+      ],
+      "id": "2af17db5-54e2-4c59-ae19-d265bc401d14",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        752,
+        -80
+      ],
+      "id": "45ed5e94-6234-4d60-8561-ad8b1f83f7c5",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "url": "https://www.bigdata-insider.de/ki-insider/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        304,
+        -80
+      ],
+      "id": "64ab0e1b-5e17-4736-ae14-6375cb0d4462",
+      "name": "Load Index Page"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "output",
+              "cssSelector": "article",
+              "returnValue": "html",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        -80
+      ],
+      "id": "2cb3fed0-29dd-4ac5-84a7-0e71c5a0bd8f",
+      "name": "Extract Articles"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "output",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "link",
+              "cssSelector": "a",
+              "returnValue": "attribute",
+              "attribute": "href"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        -80
+      ],
+      "id": "a30249fd-1bf8-465d-933f-7a3bcc78aa1c",
+      "name": "Extract Article Link"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "289f0fca-503c-4093-b9ec-077b01487c8f",
+              "name": "url",
+              "value": "={{ $('Load Index Page').params.url.concat($json.link).replaceAll(\"//\", \"/\").replace(\":/\", \"://\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        -80
+      ],
+      "id": "a8639cc3-0cb2-4d07-b02b-845ada017cbc",
+      "name": "Build URL"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "URL",
+              "field2": "url"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1648,
+        -80
+      ],
+      "id": "dd2f8318-d6d0-4265-b3c6-8caf3d418a1f",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1872,
+        -80
+      ],
+      "id": "ad3e4106-f1bd-4a8f-aab4-486638412d36",
+      "name": "Load Article"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "date",
+              "cssSelector": "time",
+              "returnValue": "attribute",
+              "attribute": "datetime"
+            },
+            {
+              "key": "headline",
+              "cssSelector": "title"
+            },
+            {
+              "key": "summary",
+              "cssSelector": "article .inf-text--large"
+            },
+            {
+              "key": "content",
+              "cssSelector": "article",
+              "skipSelectors": "figure, a"
+            },
+            {
+              "key": "image_url",
+              "cssSelector": "article figure a",
+              "returnValue": "attribute",
+              "attribute": "data-infinity-image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        2096,
+        -80
+      ],
+      "id": "d16b7de9-c4ea-40ea-965e-deac975b308d",
+      "name": "Extract Headline & Co."
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2320,
+        -80
+      ],
+      "id": "30f8db25-dc1c-458b-ab82-1e6d818ec506",
+      "name": "Load Image"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "URL",
+              "fieldValue": "={{ $('Merge').item.json.url }}"
+            },
+            {
+              "fieldName": "Headline",
+              "fieldValue": "={{ $json.headline }}"
+            },
+            {
+              "fieldName": "Summary",
+              "fieldValue": "={{ $json.summary }}"
+            },
+            {
+              "fieldName": "Content",
+              "fieldValue": "={{ $json.content }}"
+            },
+            {
+              "fieldName": "Image",
+              "binaryData": true,
+              "binaryProperty": "data"
+            },
+            {
+              "fieldName": "Date",
+              "fieldValue": "={{ $json.date }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        2544,
+        -80
+      ],
+      "id": "5564da59-0fb7-4b8f-9f13-079f06d8c596",
+      "name": "Save to DB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pi2aa8f3z9jcs06",
+        "table": "mr8lj0zudzljtb9",
+        "limit": "=1",
+        "options": {
+          "where": "=(URL,eq,{{ $json.url }})"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1424,
+        -160
+      ],
+      "id": "719142dc-86e3-49af-ac5a-2f50f2659fa5",
+      "name": "Search in DB",
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "h9waknF8nCTtl0Au",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "u6kagvjfcuee1nz9hf35xkjri7uow3",
+        "message": "New KI-News created",
+        "priority": 0,
+        "additionalFields": {
+          "url": "=https://nocodb.kai-boerner.de/dashboard/#/nc/pi2aa8f3z9jcs06/mr8lj0zudzljtb9/vwbaxe9edbj7f0y2/ki-news-kanban"
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2768,
+        -80
+      ],
+      "id": "7382167f-8c21-458c-aafe-3a80c1d70f99",
+      "name": "Push a message",
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "VnHS1NY76QWOsgAo",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        -208
+      ],
+      "id": "7d0eb136-70f3-49c8-b2d9-197ffb62c869",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Load Index Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Extract Article Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Index Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Articles": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Article Link": {
+      "main": [
+        [
+          {
+            "node": "Build URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build URL": {
+      "main": [
+        [
+          {
+            "node": "Search in DB",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Load Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Article": {
+      "main": [
+        [
+          {
+            "node": "Extract Headline & Co.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Headline & Co.": {
+      "main": [
+        [
+          {
+            "node": "Load Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Image": {
+      "main": [
+        [
+          {
+            "node": "Save to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in DB": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to DB": {
+      "main": [
+        [
+          {
+            "node": "Push a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Load Index Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "ZgRERlb7YOFD2Fgh",
+    "saveManualExecutions": false
+  },
+  "versionId": "dbe6f7c7-2d1d-4deb-8ee8-4f09f3e37cda",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
+  },
+  "id": "t7V09QJhyGPafBLH",
+  "tags": []
+}
