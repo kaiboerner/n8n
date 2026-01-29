@@ -7,7 +7,7 @@
         "text": "={{ $json.content }}",
         "shareMediaCategory": "IMAGE",
         "additionalFields": {
-          "visibility": "CONNECTIONS"
+          "title": "={{ $json.title }}"
         }
       },
       "type": "n8n-nodes-base.linkedIn",
@@ -30,7 +30,9 @@
         "person": "-6pKOcQkSC",
         "text": "={{ $json.content }}",
         "shareMediaCategory": "IMAGE",
-        "additionalFields": {}
+        "additionalFields": {
+          "title": "={{ $json.title }}"
+        }
       },
       "type": "n8n-nodes-base.linkedIn",
       "typeVersion": 1,
@@ -74,6 +76,9 @@
       "parameters": {
         "workflowInputs": {
           "values": [
+            {
+              "name": "title"
+            },
             {
               "name": "content"
             },
@@ -229,7 +234,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "16d2e7f2-4ed6-4ce3-9736-eb7739b9167c",
+  "versionId": "43265eb1-aae3-42d8-9f18-eec4bebc4830",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dd55c636a6af52dda22aa424fe424e1cb9469e4dc4ef9144fc48554c03d56158"
